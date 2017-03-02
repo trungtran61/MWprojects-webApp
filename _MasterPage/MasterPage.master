@@ -1,0 +1,221 @@
+<%@ Master Language="C#" AutoEventWireup="true" Inherits="webApp._MasterPage.MasterPage" CodeBehind="MasterPage.master.cs" %>
+
+<%@ Register Src="~/_Controls/StartButton.ascx" TagName="StartButton" TagPrefix="uc1" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <title>Machine Works, LLC.</title>
+    <link rel="stylesheet" href="../css/bootstrap.min.css" />
+    <script language="javascript" type="text/javascript" src="/MWORKS/App_Themes/jquery-1.11.3.min.js"></script>
+    <script language="javascript" type="text/javascript">
+        var cWin = new Array(); var focused = true;
+        var tHdlr1 = null; var tHdlr2 = null;
+        window.onfocus = function () { focused = true; };
+        window.onblur = function () { focused = false; };
+        window.onbeforeunload = function () { clsChild(); }
+
+        function xy() {
+            tblFont.style.display = 'block';
+            tblFont.style.left = event.clientX + document.documentElement.scrollLeft - 100 + 'px';
+        }
+        function doLink(xURL, xVal) {
+            var url = "http://" + window.location.hostname;
+            if (window.location.port) url = url + ":" + window.location.port;
+            var form = document.createElement("form"); form.setAttribute("method", "post"); form.setAttribute("action", url + "/MWORKS" + xURL);
+            var hf = document.createElement("input"); hf.setAttribute("id", "hfVal"); hf.setAttribute("name", "hfVal");
+            hf.setAttribute("type", "hidden"); hf.setAttribute("value", xVal); form.appendChild(hf);
+            document.body.appendChild(form); form.submit();
+        }
+        function showWarning(x) {
+            var msg = 'Your page will expire in approximately ' + x + ' minutes.';
+            if (!showAlert(msg)) alert(msg);
+        }
+        function oPopup(x, y, z) {
+            cWin[cWin.length] = window.open(x, y, y);
+        }
+        function clsChild() {
+            for (var i = 0; i < cWin.length; i++) {
+                if (!cWin[i].closed) {
+                    cWin[i].clsChild();
+                    cWin[i].close();
+                }
+            }
+            cWin.length = 0;
+        }
+        function showAlert(x) {
+            var hasAlert = focused;
+            if (focused) alert(x);
+            else {
+                for (var i = 0; i < cWin.length; i++) {
+                    if (!cWin[i].closed) {
+                        hasAlert = cWin[i].showAlert(x);
+                        if (hasAlert) break;
+                    }
+                }
+            }
+            return hasAlert;
+        }
+    </script>
+    <style>
+        body
+        {
+            padding: 5px;
+        }
+        input[type=text] .form-control{
+            padding:0 0 0 2px;
+            margin-bottom:0; /* Reduced from whatever it currently is */
+            margin-top:0; /* Reduced from whatever it currently is */
+        }
+       
+    </style>
+    <asp:ContentPlaceHolder ID="cphHead" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body onload="rTO();">
+    <form id="form1" runat="server">
+        <aspx:ScriptManager ID="myScriptManager" runat="server" EnablePartialRendering="true" EnablePageMethods="true" />
+        <table id="tblFont" cellpadding="2" cellspacing="2" class="tblFont">
+            <tr>
+                <td>
+                    <asp:DropDownList ID="ddlFontSize" runat="server" AutoPostBack="true" OnSelectedIndexChanged="Changed">
+                        <asp:ListItem Text="small" Value="small"></asp:ListItem>
+                        <asp:ListItem Text="medium" Value="medium"></asp:ListItem>
+                        <asp:ListItem Text="large" Value="large"></asp:ListItem>
+                        <asp:ListItem Text="x-large" Value="x-large"></asp:ListItem>
+                        <asp:ListItem Text="xx-large" Value="xx-large"></asp:ListItem>
+                    </asp:DropDownList>
+                    <input type="button" value="Cancel" onclick="javascript: tblFont.style.display = 'none';" />
+                </td>
+            </tr>
+        </table>
+        <div id="dvSize" runat="server">
+            <div style="top: 0px; left: 0px; right: 0px; position: fixed;">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr style="background-color: #6a98c9;">
+                        <td>
+                            <uc1:StartButton ID="mySB" runat="server" />
+                        </td>
+                        <td align="right">
+                            <div id="dvSearch" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'btnSearch')" class="input-group">
+                                <input type="text" id="txtGlobalSearch" name="txtGlobalSearch" class="form-control col-xs-3 input-sm" />
+                                <span class="input-group-btn">
+                                    <input type="button" id="btnSearch" value="Search" onclick="javascript: doLink('/gSearch.aspx', document.getElementById('txtGlobalSearch').value);" class="btn btn-primary input-sm" />
+                                </span>
+                            </div>
+                        </td>
+                        <td align="right">
+                            <%= gVersion() %><br />
+                            <%= gLink("CheckList") %>
+                            <asp:HyperLink ID="lnkStatus" runat="server" NavigateUrl="~/WIP/Status.aspx" CssClass="lnkQueue">Status</asp:HyperLink>
+                            |
+      <asp:HyperLink ID="lnkQueue" runat="server" NavigateUrl="~/Default.aspx" CssClass="lnkQueue">Queue</asp:HyperLink>
+                            |
+      <asp:HyperLink ID="lnkMachine" runat="server" NavigateUrl="~/Tools/MachineInfo.aspx" CssClass="lnkQueue">Machine</asp:HyperLink>
+                            |
+      <%= gLink("Reportal") %>
+                            <%= gLink("Budget") %>
+                            <asp:Literal ID="litRight" runat="server"></asp:Literal>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="height: 1px; background: #85226C"></td>
+                    </tr>
+                </table>
+            </div>
+            <table width="100%" border="0" cellpadding="1" cellspacing="1">
+                <tr>
+                    <td>
+                        <br />
+                        <br />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td style="height: 100%;">
+                                    <asp:ContentPlaceHolder ID="mainArea" runat="server"></asp:ContentPlaceHolder>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <aspx:UpdatePanel ID="uPnlPopup" runat="server">
+                <ContentTemplate>
+                    <asp:Panel ID="pnlPopup" runat="server" />
+                </ContentTemplate>
+            </aspx:UpdatePanel>
+        </div>
+        <telerik:RadWindowManager ID="radWindow" runat="server" Skin="Vista" Title="Modal Popup">
+            <Windows>
+                <telerik:RadWindow ID="mPopup" runat="server" Title="Modal Popup" Height="650px"
+                    Width="1050px" Left="150px" ReloadOnShow="true" VisibleStatusbar="false" ShowContentDuringLoad="false" Modal="true" Skin="Vista" VisibleTitlebar="true" />
+            </Windows>
+        </telerik:RadWindowManager>
+        <telerik:RadCodeBlock ID="rcbPopup" runat="server">
+            <%--  <script language="javascript" type="text/javascript" src="<%= Page.ResolveUrl("~/App_Themes/jquery-1.11.3.min.js") %>"></script>--%>
+            <script type="text/javascript">
+                function lPopup1(xURL) { window.open(xURL); }
+                function xPopup1(xURL) { window.open(xURL); }
+                function lPopup(xURL) { window.radopen(xURL, "mPopup").maximize(); }
+                function xPopup(xURL) { window.radopen(xURL, "mPopup"); }
+
+                function doLogout() {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<%= Page.ResolveUrl("~/Search.asmx/doLogout") %>',
+     data: '{}',
+     contentType: 'application/json; charset=utf-8',
+     dataType: 'json',
+     success: function (data) { location.href = '<%= Page.ResolveUrl("~/Default.aspx") %>'; },
+     error: doError
+    });
+}
+function doError(request, status, error) { alert(request.statusText); }
+function rTO() {
+    if (tHdlr1) clearTimeout(tHdlr1);
+    if (tHdlr2) clearTimeout(tHdlr2);
+
+    $.ajax({
+        type: 'POST',
+        async: false,
+        url: '<%= Page.ResolveUrl("~/Search.asmx/loginDetail") %>',
+     data: '{}',
+     contentType: 'application/json; charset=utf-8',
+     dataType: 'json',
+     success: function (data) {
+         var xData = $.parseJSON(data.d);
+         if (xData.isLoggedIn) {
+             tHdlr1 = setTimeout(function () { showWarning(xData.timeWarn) }, (xData.timeOut - xData.timeWarn) * 60000);
+             tHdlr2 = setTimeout("doLogout();", xData.timeOut * 60000);
+         }
+     },
+     error: doError
+    });
+}
+            </script>
+        </telerik:RadCodeBlock>
+    </form>
+
+    <script type="text/javascript">
+        Sys.Application.add_load(AppLoad);
+
+        function AppLoad() {
+            Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequest);
+        }
+
+        function EndRequest(sender, args) {
+            // Check to see if there's an error on this request.
+            if (args.get_error() != undefined) {
+                var msg = args.get_error().message.replace("Sys.WebForms.PageRequestManagerServerErrorException: ", "");
+                alert(msg);
+                args.set_errorHandled(true);
+            } else rTO();
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<asp:GridView SkinId="Default" runat="server" AllowPaging="True" PageSize="50" AllowSorting="True" AutoGenerateColumns="False" CellSpacing="1" CellPadding="4"
+ ForeColor="#333333" GridLines="Both" BorderStyle="Outset" BorderWidth="2px">
+ <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+ <RowStyle BackColor="#EFF3FB" />
+ <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+ <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+ <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+ <EditRowStyle BackColor="#9999CC" />
+ <AlternatingRowStyle BackColor="White" />
+</asp:GridView>
+
+<asp:GridView SkinId="GrayHeader" runat="server" AllowPaging="True" PageSize="10" AllowSorting="True" AutoGenerateColumns="False" CellPadding="4" ForeColor="#333333" GridLines="Both">
+ <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
+ <RowStyle BackColor="#EFF3FB" />
+ <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
+ <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
+ <HeaderStyle BackColor="#CCCCCC" Font-Bold="True" ForeColor="Black" />
+ <EditRowStyle BackColor="#9999CC" />
+ <AlternatingRowStyle BackColor="White" />
+</asp:GridView>
+
+<asp:RequiredFieldValidator ForeColor="Red" runat="server"></asp:RequiredFieldValidator>
+<asp:RegularExpressionValidator ForeColor="Red" runat="server"></asp:RegularExpressionValidator>

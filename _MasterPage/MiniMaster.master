@@ -1,0 +1,123 @@
+<%@ Master Language="C#" AutoEventWireup="true" Inherits="webApp._MasterPage.MiniMaster" Codebehind="MiniMaster.master.cs" %>
+<%--<%@ Register Src="~/_Controls/Progress.ascx" TagName="Progress" TagPrefix="ucProgress" %>--%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+ <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+ <title>Machine Works, LLC.</title>
+ <script type="text/javascript" language="javascript">
+  var cWin = new Array();
+  var focused = true;
+  window.onfocus = function () { focused = true; };
+  window.onblur = function () { focused = false; };
+
+  function gInstr(obj1, obj2) {
+   var str = document.getElementById(obj2).value.substring(0, 50);
+   str = str.replace(/^\s+|\s+$/g, "");
+   if (str.length < 1) { str = "&#8597;"; }
+   document.getElementById(obj1).innerHTML = str;
+  }
+  function doClose() {
+   var x = document.getElementById('xCloseX');
+   if (x) x.value = 'Yes';
+   self.close();
+  }
+  function oPopup(x, y, z) {
+   cWin[cWin.length] = window.open(x, y, y);
+  }
+  function clsChild() {
+   for (var i = 0; i < cWin.length; i++) {
+    if (!cWin[i].closed) {
+     cWin[i].clsChild();
+     cWin[i].close();
+    }
+   }
+   cWin.length = 0;
+  }
+  function showAlert(x) {
+   var hasAlert = focused;
+   if (focused) alert(x);
+   else {
+    for (var i = 0; i < cWin.length; i++) {
+     if (!cWin[i].closed) {
+      hasAlert = cWin[i].showAlert(x);
+      if (hasAlert) break;
+     }
+    }
+   }
+   return hasAlert;
+  }
+  function rTO() { window.opener.rTO(); }
+ </script>
+ <asp:ContentPlaceHolder ID="cphHead" runat="server"></asp:ContentPlaceHolder>
+</head>
+<body onload="rTO();">
+ <form id="form1" runat="server">
+ <aspx:ScriptManager ID="myScriptManager" runat="server" EnablePartialRendering="true" EnablePageMethods="true" />
+ <%--<ucProgress:Progress ID="abc" runat="server" />--%>
+ <div id="dvSize" runat="server">
+  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+   <tr id="trTitle" runat="server">
+    <td>
+     <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+       <td><asp:Label ID="lblLeft" runat="server"></asp:Label></td>
+       <td align="right"><asp:ImageButton ID="imgClose" runat="server" OnClientClick="javascript:doClose();return false;" ImageUrl="~/App_Themes/close.jpg" AlternateText="Close" /></td>
+      </tr>
+     </table>
+    </td>
+   </tr>
+   <tr>
+    <td style="height:1px; background:#85226C"></td>
+   </tr>
+   <tr>
+    <td>
+     <table cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+       <td><asp:ContentPlaceHolder ID="mainArea" runat="server"></asp:ContentPlaceHolder></td>
+      </tr>
+     </table>
+    </td>
+   </tr>
+  </table>
+  <aspx:UpdatePanel ID="uPnlPopup" runat="server">
+   <ContentTemplate>
+    <asp:Panel ID="pnlPopup" runat="server" />
+   </ContentTemplate>
+  </aspx:UpdatePanel>
+ </div>
+ <telerik:RadWindowManager ID="radWindow" runat="server" Skin="Vista" Title="Modal Popup">
+  <Windows>
+   <telerik:RadWindow ID="mPopup" runat="server" Title="Modal Popup" Height="500px" 
+    Width="500px" Left="150px" ReloadOnShow="true" VisibleStatusbar="false" ShowContentDuringLoad="false" Modal="true" Skin="Vista" VisibleTitlebar="true" />
+  </Windows>
+ </telerik:RadWindowManager>
+ <telerik:RadCodeBlock ID="rcbPopup" runat="server">
+  <script type="text/javascript">
+   function lPopup1(xURL) { window.open(xURL); }
+   function xPopup1(xURL) { window.open(xURL); }
+   function lPopup(xURL) { window.radopen(xURL, "mPopup").maximize(); }
+   function xPopup(xURL) { window.radopen(xURL, "mPopup"); }
+  </script>
+ </telerik:RadCodeBlock> 
+ </form>
+<script type="text/javascript">
+ Sys.Application.add_load(AppLoad);
+
+ function AppLoad() {
+  Sys.WebForms.PageRequestManager.getInstance().add_endRequest(EndRequest);
+ }
+
+ function EndRequest(sender, args) {
+  // Check to see if there's an error on this request.
+  if (args.get_error() != undefined) {
+   var msg = args.get_error().message.replace("Sys.WebForms.PageRequestManagerServerErrorException: ", "");
+   alert(msg);
+   args.set_errorHandled(true);
+  } else rTO();
+ }
+</script>
+</body>
+</html>

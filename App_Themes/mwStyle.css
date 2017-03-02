@@ -1,0 +1,169 @@
+﻿body
+{
+    background-color: #ffffff;
+    font-family: Verdana, Arial, helvetica, sans-serif;
+    font-size: 8pt;
+    color: #000000;
+    padding: 0px;
+    margin: 0px;
+    height:100%;
+    width:100%;
+}
+.modalBackground {
+	background-color:Gray;
+	filter: alpha(opacity=20);
+	opacity: 0.2;
+}
+.modalPopup {
+	background-color: #FFFFDD;
+	border-width: 3px;
+	border-style: solid;
+	border-color: Gray;
+	padding: 3px;
+}
+.tblLogin
+{
+	position:absolute;
+	display: block;
+	Top: 125px;
+	Left: 385px;
+	background-color: #CCFFCC;
+	border-style: solid;
+	border-width: thin;
+	border-color: Black;
+}
+.tblFont
+{
+	position:absolute;
+	top:50px;
+	display: none;
+	background-color: #CCFFCC;
+	border-style: solid;
+	border-width: thin;
+	border-color: Black;
+}
+#progressData
+{
+	position:absolute;
+	Top: 75px;
+	Left: 35%;
+	background-color: #CCFFCC;
+	border: solid 1px Red;
+	font-size: 2.0em;
+}
+.statusLnk
+{
+	text-decoration:none;
+}
+.mLink
+{
+	text-decoration:underline;
+	cursor:pointer;
+	color:Blue;
+}
+.tblVendor
+{
+	width: 75%;
+	background-color: #AACCAA;
+	border-style: solid;
+	border-width: thin;
+	border-color:Green;
+}
+.tblVendor1
+{
+	width: 75%;
+	background-color: #D0E3B5;
+	border-style: solid;
+	border-width: thin;
+	border-color:Green;
+}
+.tblImage
+{
+	background-color: #CCFFCC;
+	border-style: solid;
+	border-width: thin;
+	border-color: Black;
+}
+.tblImageNew
+{
+	width:75%;
+	background-color: #AABBAA;
+	border-style: solid;
+	border-width: thin;
+	border-color: Black;
+}
+
+.pnlECNHistory 
+{
+	position: absolute;
+	display: none;
+	Top: 50px;
+	Left: 10px;
+	width: 75%;
+	background-color: #AABBAA;
+	overflow:hidden;
+	border-width: thin;
+	border-style: solid;
+}
+.gridECNHistory
+{
+	width: 100%;
+	background: #FFAAFF;
+}
+.gridDocHistory
+{
+	width: 100%;
+	background: #FFAAFF;
+}
+.tblNewDoc
+{
+	position: absolute;
+	display: none;
+	Top: 190px;
+	Left: 10px;
+	width: 80%;
+	background-color: #CCFFCC;
+	border-style: solid;
+	border-width: thin;
+	border-color: Black;
+}
+.tblDocDetail
+{
+	width: 80%;
+	background: #99CCFF;
+}
+.tblECN
+{
+	width: 80%;
+	background: #EEEEEE;
+}
+.tblSS
+{
+	border-style: solid;
+	border-width:thin;
+	border-color: Black;
+	border-collapse: collapse;
+}
+.NavBtn
+{
+    background-color:White;
+    border-style:solid;
+    border-width:1px;
+    font-family:Verdana;
+    color:#284E98;
+}
+.SearchForm { background-color: #EFF3FB; border-style: double; border-color: #B5C7DE; }
+.Pointer { cursor: pointer; color: Blue; text-decoration: underline; }
+.Help { cursor: help; color: Blue; text-decoration: underline; }
+.dvHelp { position:absolute; display:none; border-style:outset; border-color:ActiveBorder; width:99%; height:99%; }
+.lnkQueue { text-decoration:none; color:black; }
+.lnkDisable { cursor:text; text-decoration:none; color:black; }
+.Finger { cursor:pointer; }
+.NonVisible { display:none; }
+.BlueBar { background-color:#330099; color:White; }
+.GrayBar { background-color:#EEEEEE; color:Black; }
+.Tb2 { border-collapse:collapse; border:solid 1px black; }
+.Td2 { border: solid 1px black; }
+.Td20 { border-top: solid 1px black; border-left: solid 0px black; }
+.Td22 { border-top: solid 1px black; border-left: solid 1px black; }
+fieldset { display:inline; background-color:#fefaed; }

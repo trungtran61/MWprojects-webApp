@@ -1,0 +1,30 @@
+﻿*MillSetupSheet.xml, *LatheSetupSheet.xml, *QTE.xml, *QTE_pdf.xml
+
+*spWOPackingList_S3[W], *spWOPackingList_Export[W], *spFinQte_QTE_Distinct[R]
++spReport_AutoOpenAREmail[W]
+----------
+sp_helpdb 'MachineWork'
+
+--- Dependencies Script ---
+SELECT routine_catalog + '.' + routine_schema + '.' + routine_name Routine_Name,Routine_Type
+FROM information_schema.routines isr
+WHERE charindex('vwMaterial_Quote',isr.routine_definition)>0
+
+--- DB Size and Restore Data Script ---
+SELECT t1.DBName,t1.SizeMB,t2.Last_Restore_Date
+FROM (
+SELECT DB_NAME(database_id) DBName, SUM((size*8)/1024) SizeMB
+ FROM sys.master_files GROUP BY DB_NAME(database_id)
+) t1
+LEFT OUTER JOIN (
+SELECT destination_database_name DBName,max(restore_date) Last_Restore_Date FROM msdb.dbo.restorehistory GROUP BY destination_database_name
+) t2 ON t1.DBName=t2.DBName
+ORDER BY t2.Last_Restore_Date DESC
+
+
+http://rlacovara.blogspot.com/2009/02/high-performance-data-access-layer.html
+http://rlacovara.blogspot.com/2010/04/aapl-part-5-how-to-write-data-access.html
+http://rlacovara.blogspot.com/2010/04/aapl-part-6-building-datamapper-and.html
+http://rlacovara.blogspot.mx/2011/01/aapl-part-7-building-generic-data.html
+http://www.dotnetcurry.com/ShowArticle.aspx?ID=143
+http://msdn.microsoft.com/en-us/magazine/cc163856.aspx
